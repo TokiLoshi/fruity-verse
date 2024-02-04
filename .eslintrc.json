@@ -1,0 +1,42 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "prettier",
+    "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:import/recommended",
+    "plugin:@react-three/recommended"
+  ],
+  "plugins": ["react", "react-hooks", "import", "prettier", "@react-three"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/extensions": [".js", ".jsx"],
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".json"],
+        "paths": ["src"]
+      }
+    }
+  },
+  "rules": {
+    "curly": ["warn", "multi-line", "consistent"],
+    "no-console": "off",
+    "no-empty-pattern": "warn",
+    "no-duplicate-imports": "error",
+    "import/no-unresolved": "off",
+    "import/export": "error"
+  }
+}

@@ -22,6 +22,7 @@ export default function Experience() {
         <boxGeometry />
         <meshStandardMaterial color="hotpink" />
       </mesh>
+      <Sparkles color="purple" speed={0.2} scale={3} count={100} opacity={1} />
     </>
   )
 }

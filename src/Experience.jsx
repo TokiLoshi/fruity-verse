@@ -9,6 +9,7 @@ import Sun from './Sun'
 
 export default function Experience() {
   const sun = useRef()
+  console.log(EffectComposer)
 
   useFrame((state, delta) => {
     sun.current.rotation.y += delta * 0.2
@@ -17,10 +18,10 @@ export default function Experience() {
     'Sun Glow': folder(
       {
 
-        offset: { value: 0.3, min: 0, max: 1 },
-        darkness: { value: 0.5, min: 0, max: 1 },
+        offset: { value: 0.74, min: 0, max: 1 },
+        darkness: { value: 0.84, min: 0, max: 1 },
         eskil: { value: true },
-        luminanceThreshold: { value: 0, min: 0, max: 1 },
+        luminanceThreshold: { value: 0.15, min: 0, max: 1 },
         height: { value: 300, min: 0, max: 1000 },
         luminanceSmoothing: { value: 0.9, min: 0, max: 1 },
       },
@@ -47,6 +48,15 @@ export default function Experience() {
         <meshStandardMaterial emissive="orange" emissiveIntensity={3} toneMapped={false} />
       </mesh>
       <Sparkles color="purple" speed={0.2} scale={3} count={100} opacity={1} />
+    // dougnut mesh around circular mesh
+    <mesh position={[-1, 3, 4]} scale={0.5}>
+      <torusGeometry />
+      <meshStandardMaterial />
+    </mesh>
+    <mesh position={[]}>
+      <sphereGeometry />
+      <meshStandardMaterial />
+    </mesh>
     </>
   )
 }

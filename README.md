@@ -9,18 +9,7 @@ Currently, two official plugins are available:
 
 This project is being built out for a Three.js journey challenge. The theme for February 2024 is a solar system. I thought I would build a quirky fruity-verse.
 
-Scope to keep me accountable:
-[x] - project set up
-[x] - Deploy to Vercel
-[] - Dragon fruit planet model
-[] - Banana Republic planet
-[] - Pineapple Sun
-[] - Papaya planet
-[] - Mango Moon Model
-[] - Asteroids
-[] - Character Creatures
-[] - Trivia Game
-[] - Harvest Game
+Welcome to the fruity verse! You are a space whale trapped in the fruity verse. Upon your arrival you are exhausted and need to refuel. But the solar sytem you have arrived in is home to a giant black hole that is busy consuming everything around it. To escape you must eat enough fruit to get energy to go to the next solar system and escape the black hole. Who will win, the whale or the supermassive black hole? Let's find out.
 
 Packages used:
 
@@ -40,3 +29,18 @@ Models from [pomdrs market](https://market.pmnd.rs/)
 10. Paprika by [Kenney](https://market.pmnd.rs/model/paprika) (CCO) License
 11. Pear by [Kenney](https://market.pmnd.rs/model/pear) (CCO) License
 12. Pineable by [Kenney](https://market.pmnd.rs/model/pineapple) (CCO) License
+
+Textures from [3dTextures](https://3dtextures.me/)
+
+1. Fur by [Paulo S.](https://3dtextures.me/2022/04/09/stylized-fur-02/)
+2. Rock 047 by [Paulo S.](https://3dtextures.me/2022/04/07/rock-047/)
+3. Alien Flesh 002 by [João Paulo](https://3dtextures.me/2017/11/20/alien-flesh-002/)
+4. Abstract 008 by [Paulo S.](https://3dtextures.me/2019/04/01/abstract-008/)
+5. Abstract 001 by [João Paulo](https://3dtextures.me/2017/11/12/abstract-001/)
+6. Ground Wet 003 by [Paulo S.](https://3dtextures.me/2020/06/01/ground-wet-003/)
+7. encrusted gems 002 by [João Paulo](https://3dtextures.me/2018/09/07/encrusted-gems-002/)
+8. stylized dry mud 001 by [Paulo S.](https://3dtextures.me/2021/08/01/stylized-dry-mud-001/)
+9. pumpkin 001 by [Paulo S.](https://3dtextures.me/2020/03/26/pumpkin-001/)
+10. coffee grains 001 by [Paulo S.](https://3dtextures.me/2020/06/29/coffee-grains-001/)
+11. waffle 001 by [Paulo S.](https://3dtextures.me/2021/05/26/waffle-001/)
+12. watermelon 001 by [Paulo S.](https://3dtextures.me/2020/03/24/watermelon-001/)

@@ -94,7 +94,7 @@ export default function Experience() {
   return (
     <>
       <color args={['#000000']} attach="background" />
-      <Planets />
+     
       <EffectComposer disableNormalPass>
         <Bloom luminanceThreshold={luminanceThreshold} luminanceSmoothing={luminanceSmoothing} height={height} />
 
@@ -117,6 +117,7 @@ export default function Experience() {
         <sphereGeometry />
         <meshStandardMaterial />
       </mesh>
+      <Planets />
     </>
   )
 }

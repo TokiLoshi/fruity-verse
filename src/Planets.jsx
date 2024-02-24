@@ -8,7 +8,7 @@ import { TextureLoader } from 'three/src/loaders/TextureLoader'
 
 export default function Planets() {
   // Abstract1
-  const colorMap = useLoader(TextureLoader, './textures/alien/color.jpg')
+  const abstract1MeshRef = useRef()
   const [abstract1ColorMap, abstract1NormalMap, abstract1RoughnessMap, abstract1OcclusionMap] = useLoader(
     TextureLoader,
     [
@@ -19,9 +19,8 @@ export default function Planets() {
     ],
   )
 
-  const abstract1MeshRef = useRef()
-
   // Abstract8
+  const abstract8MeshRef = useRef()
   const [abstract8ColorMap, abstract8NormalMap, abstract8RoughnessMap, abstract8OcclusionMap] = useLoader(
     TextureLoader,
     [
@@ -33,6 +32,7 @@ export default function Planets() {
   )
 
   // Alien
+  const alienMeshRef = useRef()
   const [alienColorMap, alienNormalMap, alienRoughnessMap, alienOcclusionMap] = useLoader(TextureLoader, [
     './textures/alien/color.jpg',
     './textures/alien/normal.jpg',
@@ -41,6 +41,7 @@ export default function Planets() {
   ])
 
   // Coffee
+  const coffeeMeshRef = useRef()
   const [coffeeColorMap, coffeeNormalMap, coffeeRoughnessMap, coffeeOcculsionMap, coffeeDisplacementMap] = useLoader(
     TextureLoader,
     [
@@ -51,7 +52,9 @@ export default function Planets() {
       './textures/coffee/displacement.png',
     ],
   )
+
   // Fur
+  const furMeshRef = useRef()
   const [furColorMap, furNormalMap, furOcclusionMap, furRoughnessMap, furNHeightlMap] = useLoader(TextureLoader, [
     './textures/fur/color.jpg',
     './textures/fur/normal.jpg',
@@ -59,7 +62,9 @@ export default function Planets() {
     './textures/fur/occlusion.jpg',
     './textures/fur/height.png',
   ])
+
   // Gems
+  const gemsMeshRef = useRef()
   const [gemsColorMap, gemsDisplacementMap, gemsNormalMap, gemsRoughnessMap, gemsOcclusionMap] = useLoader(
     TextureLoader,
     [
@@ -72,6 +77,7 @@ export default function Planets() {
   )
 
   // Mud
+  const mudMeshRef = useRef()
   const [mudColorMap, mudHeightMap, mudNormalMap, mudOcclusionMap, mudRoughnessMap] = useLoader(TextureLoader, [
     './textures/mud/color.jpg',
     './textures/mud/height.png',
@@ -81,6 +87,7 @@ export default function Planets() {
   ])
 
   // Pumpkin
+  const pumpkinMeshRef = useRef()
   const [pumpkinColorMap, pumpkinHeightMap, pumpkinNormalMap, pumpkinRoughnessMap, pumpkinOcclusionMap] = useLoader(
     TextureLoader,
     [
@@ -93,6 +100,7 @@ export default function Planets() {
   )
 
   // Rock047
+  const rock047MeshRef = useRef()
   const [rock047ColorMap, rock047NormalMap, rock047RoughnessMap, rock047OcclusionMap, rock047heightMap] = useLoader(
     TextureLoader,
     [
@@ -103,7 +111,9 @@ export default function Planets() {
       './textures/rock047/height.png',
     ],
   )
+
   // waffle
+  const waffleMeshRef = useRef()
   const [waffleColorMap, waffleHeightMap, waffleNormalMap, waffleOcclusionMap, waffleRoughnessMap] = useLoader(
     TextureLoader,
     [
@@ -114,7 +124,9 @@ export default function Planets() {
       './textures/waffle/roughness.jpg',
     ],
   )
+
   // watermelon
+  const watermelonMeshRef = useRef()
   const [watermelonColorMap, watermelonHeightMap, watermelonNormalMap, watermelonOcclusionMap, watermelonRoughnessMap] =
     useLoader(TextureLoader, [
       './textures/watermelon/color.jpg',
@@ -125,6 +137,7 @@ export default function Planets() {
     ])
 
   // wetGround
+  const wetGroundMeshRef = useRef()
   const [wetGroundColorMap, wetGroundHeightMap, wetGroundNormalMap, wetGroundOcclusionMap, wetGroundRoughnessMap] =
     useLoader(TextureLoader, [
       './textures/wetGround/color.jpg',
@@ -134,6 +147,37 @@ export default function Planets() {
       './textures/wetGround/roughness.jpg',
     ])
 
+  useFrame((state, delta) => {
+    const orbitalRadius = 5
+    const time = state.clock.getElapsedTime()
+    abstract1MeshRef.current.position.z = Math.cos(time * 0.2)
+
+    abstract1MeshRef.current.rotation.y = time * 0.2
+    abstract8MeshRef.current.position.x = Math.cos(time * 0.2) * orbitalRadius
+
+    abstract8MeshRef.current.rotation.y = time * 0.2
+    alienMeshRef.current.position.x = Math.cos(time * 0.2) * orbitalRadius
+    alienMeshRef.current.rotation.y = time * 0.2
+    coffeeMeshRef.current.position.x = Math.cos(time * 0.2) * orbitalRadius
+    coffeeMeshRef.current.rotation.y = time * 0.2
+    furMeshRef.current.position.x = Math.cos(time * 0.2) * orbitalRadius
+    furMeshRef.current.rotation.y = time * 0.2
+    gemsMeshRef.current.position.x = Math.cos(time * 0.2) * orbitalRadius
+    gemsMeshRef.current.rotation.y = time * 0.2
+    mudMeshRef.current.position.x = Math.cos(time * 0.2) * orbitalRadius
+    mudMeshRef.current.rotation.y = time * 0.2
+    pumpkinMeshRef.current.position.x = Math.cos(time * 0.2) * orbitalRadius
+    pumpkinMeshRef.current.rotation.y = time * 0.2
+    rock047MeshRef.current.position.x = Math.cos(time * 0.2) * orbitalRadius
+    rock047MeshRef.current.rotation.y = time * 0.2
+    waffleMeshRef.current.position.x = Math.cos(time * 0.2) * orbitalRadius
+    waffleMeshRef.current.rotation.y = time * 0.2
+    watermelonMeshRef.current.position.x = Math.cos(time * 0.2) * orbitalRadius
+    watermelonMeshRef.current.rotation.y = time * 0.2
+    wetGroundMeshRef.current.position.x = Math.cos(time * 0.2) * orbitalRadius
+    wetGroundMeshRef.current.rotation.y = time * 0.2
+  })
+
   // Add colliders to the scene
   // Add Phsyics
   // Add rings around the sun? with a shader? This should be an oval
@@ -141,13 +185,14 @@ export default function Planets() {
   // Larger planets should either rotate slower or move faster - need to look this up
   // On hover the planets should display their name
   // Sound effects on howler.js
+  // Make sizes random
 
   // If any of the planets touch the black hole decrease their scale and make them disappear
   return (
     <>
       <group>
         {/* Abstract1 Planet */}
-        <mesh position={[-2, -2, -2]}>
+        <mesh position={[-2, -2, -2]} ref={abstract1MeshRef}>
           <sphereGeometry args={[1, 32, 32]} />
           <meshStandardMaterial
             map={abstract1ColorMap}
@@ -158,7 +203,7 @@ export default function Planets() {
         </mesh>
 
         {/* Abstract8 Planet */}
-        <mesh position={[-8, -8, -8]}>
+        <mesh position={[-8, -8, -8]} ref={abstract8MeshRef}>
           <sphereGeometry args={[1, 32, 32]} />
           <meshStandardMaterial
             map={abstract8ColorMap}
@@ -169,7 +214,7 @@ export default function Planets() {
         </mesh>
         {/* 
       Alien Planet */}
-        <mesh position={[-10, -10, -10]}>
+        <mesh position={[-10, -10, -10]} ref={alienMeshRef}>
           <sphereGeometry args={[1, 32, 32]} />
           <meshStandardMaterial
             map={alienColorMap}
@@ -180,7 +225,7 @@ export default function Planets() {
         </mesh>
 
         {/* Fur Planet */}
-        <mesh position={[8, 8, 8]}>
+        <mesh position={[8, 8, 8]} ref={furMeshRef}>
           <sphereGeometry args={[1, 32, 32]} />
           <meshStandardMaterial
             map={furColorMap}
@@ -192,7 +237,7 @@ export default function Planets() {
         </mesh>
 
         {/* Coffee Planet */}
-        <mesh position={[10, 10, 10]}>
+        <mesh position={[10, 10, 10]} ref={coffeeMeshRef}>
           <sphereGeometry args={[1, 32, 32]} />
           <meshStandardMaterial
             map={coffeeColorMap}
@@ -205,7 +250,7 @@ export default function Planets() {
 
         {/* Gems Planet */}
 
-        <mesh position={[6, 6, 6]}>
+        <mesh position={[6, 6, 6]} ref={gemsMeshRef}>
           <sphereGeometry args={[1, 32, 32]} />
           <meshStandardMaterial
             map={gemsColorMap}
@@ -217,7 +262,7 @@ export default function Planets() {
         </mesh>
 
         {/* Mud Planet */}
-        <mesh position={[4, 4, 4]}>
+        <mesh position={[4, 4, 4]} ref={mudMeshRef}>
           <sphereGeometry args={[1, 32, 32]} />
           <meshStandardMaterial
             map={mudColorMap}
@@ -229,7 +274,7 @@ export default function Planets() {
         </mesh>
 
         {/* Pumpkin Planet */}
-        <mesh position={[2, -4, 4]}>
+        <mesh position={[2, -4, 4]} ref={pumpkinMeshRef}>
           <sphereGeometry args={[1, 32, 32]} />
           <meshStandardMaterial
             map={pumpkinColorMap}
@@ -241,7 +286,7 @@ export default function Planets() {
         </mesh>
 
         {/* Rock047 Planet */}
-        <mesh position={[0, -2, -6]}>
+        <mesh position={[0, -2, -6]} ref={rock047MeshRef}>
           <sphereGeometry args={[1, 32, 32]} />
           <meshStandardMaterial
             map={rock047ColorMap}
@@ -253,7 +298,7 @@ export default function Planets() {
         </mesh>
 
         {/* waffle Planet */}
-        <mesh position={[2, -5, -6]}>
+        <mesh position={[2, -5, -6]} ref={waffleMeshRef}>
           <sphereGeometry args={[1, 32, 32]} />
           <meshStandardMaterial
             map={waffleColorMap}
@@ -265,7 +310,7 @@ export default function Planets() {
         </mesh>
 
         {/* watermelon Planet */}
-        <mesh position={[7, -3, -6]}>
+        <mesh position={[7, -3, -6]} ref={watermelonMeshRef}>
           <sphereGeometry args={[1, 32, 32]} />
           <meshStandardMaterial
             map={watermelonColorMap}
@@ -277,7 +322,7 @@ export default function Planets() {
         </mesh>
 
         {/* wetGround Planet */}
-        <mesh position={[4, -6, -6]}>
+        <mesh position={[4, -6, -6]} ref={wetGroundMeshRef}>
           <sphereGeometry args={[1, 32, 32]} />
           <meshStandardMaterial
             map={wetGroundColorMap}

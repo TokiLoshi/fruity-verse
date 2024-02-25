@@ -5,10 +5,27 @@ import { useFrame } from '@react-three/fiber'
 import { useGLTF, Float, Text } from '@react-three/drei'
 import { useLoader } from '@react-three/fiber'
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
+import { Vignette, ToneMapping, Bloom, EffectComposer } from '@react-three/postprocessing'
+import { BlendFunction } from 'postprocessing'
+import { useControls, folder } from 'leva'
 
 export default function Planets() {
-  // Abstract1
+  const sun = useRef()
+  const { offset, darkness, luminanceThreshold, height, luminanceSmoothing } = useControls('Effects', {
+    'Sun Glow': folder(
+      {
+        offset: { value: 0.15, min: 0, max: 1 },
+        darkness: { value: 0.84, min: 0, max: 1 },
 
+        luminanceThreshold: { value: 0.15, min: 0, max: 1 },
+        height: { value: 300, min: 0, max: 1000 },
+        luminanceSmoothing: { value: 0.9, min: 0, max: 1 },
+      },
+      { collapsed: false },
+    ),
+  })
+
+  // Abstract1
   /**
    * Load all of the textures for the planets
    */
@@ -154,43 +171,43 @@ export default function Planets() {
   // Geek Culture Tutorial on creating ecliptics and a solar system
   // Started with xRadius of 5 and z Radius of 8
   // Ones closes to sun should have a faster velocity
-  const starterX = 5
-  const starterZ = 8
+  const starterX = Math.random() * 5
+  const starterZ = Math.random() * 8
 
   const planetsData = [
     {
       ref: abstract1MeshRef,
       xRadius: starterX,
       zRadius: starterZ,
-      angularVelocity: 1 / starterX,
+      angularVelocity: 1.5 / starterX,
       scale: 1,
     },
     {
       ref: abstract8MeshRef,
       xRadius: starterX,
       zRadius: starterZ,
-      angularVelocity: 1 / starterX,
+      angularVelocity: 1.4 / starterX,
       scale: 1,
     },
     {
       ref: alienMeshRef,
       xRadius: starterX,
       zRadius: starterZ,
-      angularVelocity: 1 / starterX,
+      angularVelocity: 1.3 / starterX,
       scale: 1,
     },
     {
       ref: coffeeMeshRef,
       xRadius: starterX,
       zRadius: starterZ,
-      angularVelocity: 1 / starterX,
+      angularVelocity: 1.2 / starterX,
       scale: 1,
     },
     {
       ref: furMeshRef,
       xRadius: starterX,
       zRadius: starterZ,
-      angularVelocity: 1 / starterX,
+      angularVelocity: 1.1 / starterX,
       scale: 1,
     },
     {
@@ -201,17 +218,17 @@ export default function Planets() {
       scale: 1,
     },
     // Mud Planet is closest to the sun
-    { ref: mudMeshRef, xRadius: starterX, zRadius: starterZ, angularVelocity: 1 / starterX, scale: 1 },
-    { ref: pumpkinMeshRef, xRadius: starterX, zRadius: starterZ, angularVelocity: 1 / starterX, scale: 1 },
-    { ref: rock047MeshRef, xRadius: starterX, zRadius: starterZ, angularVelocity: 1 / starterX, scale: 1 },
-    { ref: waffleMeshRef, xRadius: starterX, zRadius: starterZ, angularVelocity: 1 / starterX, scale: 1 },
-    { ref: watermelonMeshRef, xRadius: starterX, zRadius: starterZ, angularVelocity: 1 / starterX, scale: 1 },
-    { ref: wetGroundMeshRef, xRadius: starterX, zRadius: starterZ, angularVelocity: 1 / starterX, scale: 1 },
+    { ref: mudMeshRef, xRadius: starterX, zRadius: starterZ, angularVelocity: 0.9 / starterX, scale: 1 },
+    { ref: pumpkinMeshRef, xRadius: starterX, zRadius: starterZ, angularVelocity: 0.8 / starterX, scale: 1 },
+    { ref: rock047MeshRef, xRadius: starterX, zRadius: starterZ, angularVelocity: 0.7 / starterX, scale: 1 },
+    { ref: waffleMeshRef, xRadius: starterX, zRadius: starterZ, angularVelocity: 0.6 / starterX, scale: 1 },
+    { ref: watermelonMeshRef, xRadius: starterX, zRadius: starterZ, angularVelocity: 0.5 / starterX, scale: 1 },
+    { ref: wetGroundMeshRef, xRadius: starterX, zRadius: starterZ, angularVelocity: 0.4 / starterX, scale: 1 },
   ]
 
   const baseXRadius = 5
   const baseZRadius = 8
-  const spacing = 2
+  const spacing = 6
 
   planetsData.forEach((planet, index) => {
     if (planet.ref.current) {
@@ -240,19 +257,24 @@ export default function Planets() {
 
   // Add colliders to the scene
   // Add Phsyics
-  // Add rings around the sun? with a shader? This should be an oval
-  // Make the planets rotate around the sun
   // Larger planets should either rotate slower or move faster - need to look this up
   // On hover the planets should display their name
   // Sound effects on howler.js
   // Make sizes random
 
   // If any of the planets touch the black hole decrease their scale and make them disappear
-
-  // Temporarily removed the random scale as we will want variations in the size
   return (
     <>
       <group>
+        {/* Sun */}
+        <EffectComposer disableNormalPass>
+          <Bloom luminanceThreshold={luminanceThreshold} luminanceSmoothing={luminanceSmoothing} height={height} />
+          <mesh ref={sun} scale={3}>
+            <sphereGeometry />
+            <meshStandardMaterial emissive="orange" emissiveIntensity={2} toneMapped={false} />
+          </mesh>
+          <ToneMapping />
+        </EffectComposer>
         {/* Abstract1 Planet */}
         <mesh position={[0, 0, 0]} ref={abstract1MeshRef}>
           <sphereGeometry args={[1, 32, 32]} />
@@ -261,6 +283,7 @@ export default function Planets() {
             normalMap={abstract1NormalMap}
             displacementMap={abstract1RoughnessMap}
             aoMap={abstract1OcclusionMap}
+            color="#ff1100"
           />
         </mesh>
 
@@ -276,7 +299,7 @@ export default function Planets() {
         </mesh>
         {/* 
       Alien Planet */}
-        <mesh position={[-10, 0, -10]} ref={alienMeshRef}>
+        <mesh position={[10, 0, -10]} ref={alienMeshRef}>
           <sphereGeometry args={[1, 32, 32]} />
           <meshStandardMaterial
             map={alienColorMap}
@@ -287,7 +310,7 @@ export default function Planets() {
         </mesh>
 
         {/* Fur Planet */}
-        <mesh position={[8, 0, 8]} ref={furMeshRef}>
+        <mesh position={[12, 0, 8]} ref={furMeshRef}>
           <sphereGeometry args={[1, 32, 32]} />
           <meshStandardMaterial
             map={furColorMap}
@@ -306,6 +329,7 @@ export default function Planets() {
             normalMap={coffeeNormalMap}
             roughnessMap={coffeeRoughnessMap}
             aoMap={coffeeOcculsionMap}
+            color="#492201"
             // displacementMap={coffeeDisplacementMap}
           />
         </mesh>

@@ -44,3 +44,7 @@ Textures from [3dTextures](https://3dtextures.me/)
 10. coffee grains 001 by [Paulo S.](https://3dtextures.me/2020/06/29/coffee-grains-001/)
 11. waffle 001 by [Paulo S.](https://3dtextures.me/2021/05/26/waffle-001/)
 12. watermelon 001 by [Paulo S.](https://3dtextures.me/2020/03/24/watermelon-001/)
+
+Background image generated with Blockade Labs and the following prompt:
+Prompt
+VR360: Bursting nebulae, shades of emerald and lavender, cosmic clouds swirling. VR360: Starlit backdrop, iridescent constellations, celestial grandeur. Style: Digital painting, smooth gradients, vivid contrasts.

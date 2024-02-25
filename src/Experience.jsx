@@ -1,5 +1,5 @@
 import { useFrame } from '@react-three/fiber'
-import { Sparkles, Sky, OrbitControls } from '@react-three/drei'
+import { Environment, Sparkles, Sky, OrbitControls } from '@react-three/drei'
 import { useRef } from 'react'
 import { useControls, folder } from 'leva'
 import { Vignette, ToneMapping, Bloom, EffectComposer } from '@react-three/postprocessing'
@@ -9,6 +9,8 @@ import Sun from './Sun'
 import { vertexShader, fragmentShader } from './shaders'
 import * as THREE from 'three'
 import Planets from './Planets'
+import { TextureLoader } from 'three/src/loaders/TextureLoader'
+import { useLoader } from '@react-three/fiber'
 
 /**
  * Loading Screen
@@ -61,13 +63,11 @@ console.log(fragmentShader)
 export default function Experience() {
   // Load an interesting background using blockade labs
   // https://www.blockade.io/
+
   const sun = useRef()
   const torus = useRef()
-  console.log(EffectComposer)
 
   useFrame((state, delta) => {
-    // sun.current.rotation.y += delta * 0.2
-    // console.log(sun.current.position.y)
     torus.current.position.x += Math.sin(delta * 0.2)
   })
   const { offset, darkness, eskil, luminanceThreshold, height, luminanceSmoothing } = useControls('Effects', {
@@ -93,8 +93,8 @@ export default function Experience() {
 
   return (
     <>
-      <color args={['#000000']} attach="background" />
-     
+      {/* <Environment background files="./textures/abstract1/color.jpg" /> */}
+      <color attach="background" args={['#ff1122']} />
       <EffectComposer disableNormalPass>
         <Bloom luminanceThreshold={luminanceThreshold} luminanceSmoothing={luminanceSmoothing} height={height} />
 

@@ -1,6 +1,6 @@
 import { useFrame } from '@react-three/fiber'
 import { Environment, Sparkles, Sky, OrbitControls } from '@react-three/drei'
-import { useRef, useState } from 'react'
+import { useRef, useState, Suspense } from 'react'
 import { useControls, folder } from 'leva'
 import { Physics } from '@react-three/rapier'
 import { Perf } from 'r3f-perf'
@@ -12,6 +12,7 @@ import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import { useLoader } from '@react-three/fiber'
 import Consoles from './Consoles.jsx'
 import { Noise, EffectComposer, ToneMapping } from '@react-three/postprocessing'
+import { Loader } from '@react-three/drei'
 
 /**
  * Loading Screen
@@ -60,6 +61,7 @@ const getEaten = () => {
 
 export default function Experience() {
   const [showPopup, setShowPopup] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
 
   const sun = useRef()
   const torus = useRef()
@@ -76,6 +78,10 @@ export default function Experience() {
     vertexShader,
     fragmentShader,
   })
+  function Loader() {
+    const { active, progress, errors, item, loaded, total } = useProgress()
+    return <Html center>{progress} % loaded</Html>
+  }
 
   return (
     <>

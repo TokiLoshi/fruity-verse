@@ -10,7 +10,7 @@ export default function Consoles({ onClose }) {
         {showPopup && (
           <div className="popup">
             <h1>Welcome to the Fruity Verse</h1>
-            <p>Something strange is happening...</p>
+            <p>Something strange is happening... could this be the start of a black hole entering this solar system?</p>
             <button className="closeButton" onClick={() => setShowPopup(false)}>
               Close
             </button>

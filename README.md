@@ -9,7 +9,13 @@ Currently, two official plugins are available:
 
 This project is being built out for a Three.js journey challenge. The theme for February 2024 is a solar system. I thought I would build a quirky fruity-verse.
 
+Initial Idea:
 Welcome to the fruity verse! You are a space whale trapped in the fruity verse. Upon your arrival you are exhausted and need to refuel. But the solar sytem you have arrived in is home to a giant black hole that is busy consuming everything around it. To escape you must eat enough fruit to get energy to go to the next solar system and escape the black hole. Who will win, the whale or the supermassive black hole? Let's find out.
+
+What I achieved:
+A rotating solar system which looks quite odd, full of interesting looking planets, and the apparent appearance of a descending black hole.
+
+I plan to keep workign toward my initial idea. This was a great exercise and highlighted a ton of things I need to practice. Please excuse all the comments and commented code - this is a work in progress.
 
 Packages used:
 

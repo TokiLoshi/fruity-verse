@@ -25,10 +25,10 @@ export default function Planets() {
     ),
   })
 
-  // Abstract1
   /**
    * Load all of the textures for the planets
    */
+  // Abstract1
   const abstract1MeshRef = useRef()
   const [abstract1ColorMap, abstract1NormalMap, abstract1RoughnessMap, abstract1OcclusionMap] = useLoader(
     TextureLoader,
@@ -171,89 +171,184 @@ export default function Planets() {
   // Geek Culture Tutorial on creating ecliptics and a solar system
   // Started with xRadius of 5 and z Radius of 8
   // Ones closes to sun should have a faster velocity
-  const starterX = Math.random() * 5
-  const starterZ = Math.random() * 8
+  // const starterX = Math.random() * 5 + 4
+  // const starterZ = Math.random() * 8 + 4
 
-  const planetsData = [
-    {
-      ref: abstract1MeshRef,
-      xRadius: starterX,
-      zRadius: starterZ,
-      angularVelocity: 1.5 / starterX,
-      scale: 1,
-    },
-    {
-      ref: abstract8MeshRef,
-      xRadius: starterX,
-      zRadius: starterZ,
-      angularVelocity: 1.4 / starterX,
-      scale: 1,
-    },
-    {
-      ref: alienMeshRef,
-      xRadius: starterX,
-      zRadius: starterZ,
-      angularVelocity: 1.3 / starterX,
-      scale: 1,
-    },
-    {
-      ref: coffeeMeshRef,
-      xRadius: starterX,
-      zRadius: starterZ,
-      angularVelocity: 1.2 / starterX,
-      scale: 1,
-    },
-    {
-      ref: furMeshRef,
-      xRadius: starterX,
-      zRadius: starterZ,
-      angularVelocity: 1.1 / starterX,
-      scale: 1,
-    },
-    {
-      ref: gemsMeshRef,
-      xRadius: starterX,
-      zRadius: starterZ,
-      angularVelocity: 1 / starterX,
-      scale: 1,
-    },
-    // Mud Planet is closest to the sun
-    { ref: mudMeshRef, xRadius: starterX, zRadius: starterZ, angularVelocity: 0.9 / starterX, scale: 1 },
-    { ref: pumpkinMeshRef, xRadius: starterX, zRadius: starterZ, angularVelocity: 0.8 / starterX, scale: 1 },
-    { ref: rock047MeshRef, xRadius: starterX, zRadius: starterZ, angularVelocity: 0.7 / starterX, scale: 1 },
-    { ref: waffleMeshRef, xRadius: starterX, zRadius: starterZ, angularVelocity: 0.6 / starterX, scale: 1 },
-    { ref: watermelonMeshRef, xRadius: starterX, zRadius: starterZ, angularVelocity: 0.5 / starterX, scale: 1 },
-    { ref: wetGroundMeshRef, xRadius: starterX, zRadius: starterZ, angularVelocity: 0.4 / starterX, scale: 1 },
-  ]
+  // console.log('StarterX: ', starterX)
+  // console.log('StarterZ: ', starterZ)
 
   const baseXRadius = 5
   const baseZRadius = 8
   const spacing = 6
 
-  planetsData.forEach((planet, index) => {
-    if (planet.ref.current) {
-      const xRadiusIncrement = index * spacing
-      const zRadiusIncrement = index * (spacing / 2)
-
-      planet.xRadius = baseXRadius + xRadiusIncrement
-      planet.zRadius = baseZRadius + zRadiusIncrement
-      const initialAngle = Math.random() * (Math.PI * 2)
-      planet.ref.current.position.x = planet.xRadius * Math.cos(initialAngle)
-      planet.ref.current.position.z = planet.zRadius * Math.sin(initialAngle)
+  const calculateOrbit = (index, baseXRadius, baseZRadius, spacing) => {
+    return {
+      xRadius: baseXRadius + index * spacing,
+      zRadius: baseZRadius + index * (spacing / 2),
     }
-  })
+  }
+
+  const planetsData = [
+    {
+      id: 1,
+      name: 'Abstract1',
+      position: [4, 0, 4],
+      ref: abstract1MeshRef,
+      xRadius: calculateOrbit(0, baseXRadius, baseZRadius, spacing).xRadius,
+      zRadius: calculateOrbit(0, baseXRadius, baseZRadius, spacing).zRadius,
+      angularVelocity: 0.1,
+      scale: 1,
+    },
+    {
+      id: 2,
+      name: 'Abstract8',
+      position: [8, 0, 4],
+      ref: abstract8MeshRef,
+      xRadius: calculateOrbit(1, baseXRadius, baseZRadius, spacing).xRadius,
+      zRadius: calculateOrbit(1, baseXRadius, baseZRadius, spacing).zRadius,
+      angularVelocity: 0.2,
+      scale: 1,
+    },
+    {
+      id: 3,
+      name: 'Alien',
+      position: [10, 0, -10],
+      ref: alienMeshRef,
+      xRadius: calculateOrbit(2, baseXRadius, baseZRadius, spacing).xRadius,
+      zRadius: calculateOrbit(2, baseXRadius, baseZRadius, spacing).zRadius,
+      angularVelocity: 0.3,
+      scale: 1,
+    },
+    {
+      id: 4,
+      name: 'Coffee',
+      position: [10, 0, 10],
+      ref: coffeeMeshRef,
+      xRadius: calculateOrbit(3, baseXRadius, baseZRadius, spacing).xRadius,
+      zRadius: calculateOrbit(3, baseXRadius, baseZRadius, spacing).zRadius,
+      angularVelocity: 0.4,
+      scale: 1,
+    },
+    {
+      id: 5,
+      name: 'Fur',
+      position: [12, 0, 8],
+      ref: furMeshRef,
+      xRadius: calculateOrbit(4, baseXRadius, baseZRadius, spacing).xRadius,
+      zRadius: calculateOrbit(4, baseXRadius, baseZRadius, spacing).zRadius,
+      angularVelocity: 0.5,
+      scale: 1,
+    },
+    {
+      id: 6,
+      name: 'Gems',
+      position: [6, 0, 6],
+      ref: gemsMeshRef,
+      xRadius: calculateOrbit(5, baseXRadius, baseZRadius, spacing).xRadius,
+      zRadius: calculateOrbit(5, baseXRadius, baseZRadius, spacing).zRadius,
+      angularVelocity: 0.6,
+      scale: 1,
+    },
+    {
+      id: 7,
+      name: 'Mud',
+      position: [4, 0, 4],
+      ref: mudMeshRef,
+      xRadius: calculateOrbit(6, baseXRadius, baseZRadius, spacing).xRadius,
+      zRadius: calculateOrbit(6, baseXRadius, baseZRadius, spacing).zRadius,
+      angularVelocity: 0.7,
+      scale: Math.random(),
+    },
+
+    {
+      id: 8,
+      name: 'Pumpkin',
+      position: [2, 0, 4],
+      ref: pumpkinMeshRef,
+      xRadius: calculateOrbit(7, baseXRadius, baseZRadius, spacing).xRadius,
+      zRadius: calculateOrbit(7, baseXRadius, baseZRadius, spacing).zRadius,
+      angularVelocity: 0.8,
+      scale: 1,
+    },
+    {
+      id: 9,
+      name: 'rock047',
+      position: [14, 0, 9],
+      ref: rock047MeshRef,
+      xRadius: calculateOrbit(8, baseXRadius, baseZRadius, spacing).xRadius,
+      zRadius: calculateOrbit(8, baseXRadius, baseZRadius, spacing).zRadius,
+      angularVelocity: 0.9,
+      scale: Math.random(),
+    },
+    {
+      id: 10,
+      name: 'waffles',
+      position: [16, 0, 6],
+      ref: waffleMeshRef,
+      xRadius: calculateOrbit(9, baseXRadius, baseZRadius, spacing).xRadius,
+      zRadius: calculateOrbit(9, baseXRadius, baseZRadius, spacing).zRadius,
+      angularVelocity: 1,
+      scale: Math.random(),
+    },
+    {
+      id: 11,
+      name: 'watermelon',
+      position: [-4, 0, 8],
+      ref: watermelonMeshRef,
+      xRadius: calculateOrbit(10, baseXRadius, baseZRadius, spacing).xRadius,
+      zRadius: calculateOrbit(10, baseXRadius, baseZRadius, spacing).zRadius,
+      angularVelocity: 1.1,
+      scale: Math.random(),
+    },
+    {
+      id: 12,
+      name: 'weGround',
+      position: [-1, 0, -3],
+      ref: wetGroundMeshRef,
+      xRadius: calculateOrbit(11, baseXRadius, baseZRadius, spacing).xRadius,
+      zRadius: calculateOrbit(11, baseXRadius, baseZRadius, spacing).zRadius,
+      angularVelocity: 1.3,
+      scale: Math.random(),
+    },
+  ]
 
   useFrame((state, delta) => {
-    const orbitalRadius = 50
     const time = state.clock.getElapsedTime()
     planetsData.forEach((planet, index) => {
       if (planet.ref.current) {
-        const { ref, xRadius, zRadius, angularVelocity } = planet
-        ref.current.position.x = planet.xRadius * Math.cos(time * planet.angularVelocity)
-        ref.current.position.z = planet.zRadius * Math.sin(time * planet.angularVelocity)
+        planet.ref.current.position.x = planet.xRadius * Math.cos(time * planet.angularVelocity)
+        planet.ref.current.position.z = planet.zRadius * Math.sin(time * planet.angularVelocity)
       }
     })
   })
+
+  // const baseXRadius = 5
+  // const baseZRadius = 8
+  // const spacing = 6
+
+  // planetsData.forEach((planet, index) => {
+  //   console.log('Planet: ', planet)
+  //   if (planet.ref.current) {
+  //     const xRadiusIncrement = index * spacing
+  //     const zRadiusIncrement = index * (spacing / 2)
+
+  //     planet.xRadius = baseXRadius + xRadiusIncrement
+  //     planet.zRadius = baseZRadius + zRadiusIncrement
+  //     const initialAngle = Math.random() * (Math.PI * 2)
+  //     planet.ref.current.position.x = planet.xRadius * Math.cos(initialAngle)
+  //     planet.ref.current.position.z = planet.zRadius * Math.sin(initialAngle)
+  //   }
+  // })
+
+  // useFrame((state, delta) => {
+  //   const time = state.clock.getElapsedTime()
+  //   planetsData.forEach((planet, index) => {
+  //     if (planet.ref.current) {
+  //       planet.ref.current.position.x = planet.xRadius * Math.cos(time * planet.angularVelocity)
+  //       planet.ref.current.position.z = planet.zRadius * Math.sin(time * planet.angularVelocity)
+  //     }
+  //   })
+  // })
 
   // Add colliders to the scene
   // Add Phsyics
@@ -276,19 +371,18 @@ export default function Planets() {
           <ToneMapping />
         </EffectComposer>
         {/* Abstract1 Planet */}
-        <mesh position={[0, 0, 0]} ref={abstract1MeshRef}>
-          <sphereGeometry args={[1, 32, 32]} />
+        <mesh ref={abstract1MeshRef}>
+          <sphereGeometry />
           <meshStandardMaterial
             map={abstract1ColorMap}
             normalMap={abstract1NormalMap}
             displacementMap={abstract1RoughnessMap}
             aoMap={abstract1OcclusionMap}
-            color="#ff1100"
           />
         </mesh>
 
         {/* Abstract8 Planet */}
-        <mesh position={[-8, 0, -8]} ref={abstract8MeshRef}>
+        <mesh position={[8, 0, 4]} ref={abstract8MeshRef}>
           <sphereGeometry args={[1, 32, 32]} />
           <meshStandardMaterial
             map={abstract8ColorMap}

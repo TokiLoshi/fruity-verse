@@ -81,8 +81,8 @@ export default function Experience() {
   return (
     <>
       {/* <Environment background files="./nebbi.pic" /> */}
-      <Environment background preset="dawn" />
-      <color attach="background" args={['#ff1122']} />
+      {/* <Environment background preset="dawn" /> */}
+      <color attach="background" args={['#001122']} />
       <OrbitControls />
       <directionalLight position={[1, 2, 3]} intensity={4.5} />
       <ambientLight intensity={0.5} />
@@ -90,7 +90,7 @@ export default function Experience() {
       // dougnut mesh around circular mesh
       <mesh position={[-1, 3, 4]} scale={0.5} ref={torus}>
         <torusGeometry />
-        <meshStandardMaterial />
+        <meshStandardMaterial color="black" />
       </mesh>
       <Planets />
     </>

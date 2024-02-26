@@ -1,3 +1,4 @@
+import { useState } from 'react'
 export default function Consoles() {
   /**
    * Add load screen with button to start the game
@@ -7,4 +8,5 @@ export default function Consoles() {
    *
    * Add winning screen for if the whale wins
    */
+  return null
 }

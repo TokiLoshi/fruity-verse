@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { CuboidCollider, RigidBody } from '@react-three/rapier'
+import { CuboidCollider, RigidBody, Physics } from '@react-three/rapier'
 import { useMemo, useState, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { useGLTF, Float, Text } from '@react-three/drei'
@@ -10,6 +10,11 @@ import { BlendFunction } from 'postprocessing'
 import { useControls, folder } from 'leva'
 
 export default function Planets() {
+  // Set up the size of the blackhole in the store
+  // Constantly check if the size of the blackhold is increasing
+  // If the blackhole collides with a planet or a piece of fruit it should get bigger
+  // If the blackhole gets too big the game should end
+
   const sun = useRef()
   const { offset, darkness, luminanceThreshold, height, luminanceSmoothing } = useControls('Effects', {
     'Sun Glow': folder(
@@ -192,8 +197,8 @@ export default function Planets() {
       ref: abstract1MeshRef,
       xRadius: calculateOrbit(0, baseXRadius, baseZRadius, spacing).xRadius,
       zRadius: calculateOrbit(0, baseXRadius, baseZRadius, spacing).zRadius,
-      angularVelocity: 0.1,
-      scale: 1,
+      angularVelocity: 1.3,
+      scale: Math.random(),
     },
     {
       id: 2,
@@ -202,8 +207,8 @@ export default function Planets() {
       ref: abstract8MeshRef,
       xRadius: calculateOrbit(1, baseXRadius, baseZRadius, spacing).xRadius,
       zRadius: calculateOrbit(1, baseXRadius, baseZRadius, spacing).zRadius,
-      angularVelocity: 0.2,
-      scale: 1,
+      angularVelocity: 1.2,
+      scale: Math.random(),
     },
     {
       id: 3,
@@ -212,8 +217,8 @@ export default function Planets() {
       ref: alienMeshRef,
       xRadius: calculateOrbit(2, baseXRadius, baseZRadius, spacing).xRadius,
       zRadius: calculateOrbit(2, baseXRadius, baseZRadius, spacing).zRadius,
-      angularVelocity: 0.3,
-      scale: 1,
+      angularVelocity: 1.1,
+      scale: Math.random(),
     },
     {
       id: 4,
@@ -222,8 +227,8 @@ export default function Planets() {
       ref: coffeeMeshRef,
       xRadius: calculateOrbit(3, baseXRadius, baseZRadius, spacing).xRadius,
       zRadius: calculateOrbit(3, baseXRadius, baseZRadius, spacing).zRadius,
-      angularVelocity: 0.4,
-      scale: 1,
+      angularVelocity: 1,
+      scale: Math.random(),
     },
     {
       id: 5,
@@ -232,8 +237,8 @@ export default function Planets() {
       ref: furMeshRef,
       xRadius: calculateOrbit(4, baseXRadius, baseZRadius, spacing).xRadius,
       zRadius: calculateOrbit(4, baseXRadius, baseZRadius, spacing).zRadius,
-      angularVelocity: 0.5,
-      scale: 1,
+      angularVelocity: 0.9,
+      scale: Math.random(),
     },
     {
       id: 6,
@@ -242,8 +247,8 @@ export default function Planets() {
       ref: gemsMeshRef,
       xRadius: calculateOrbit(5, baseXRadius, baseZRadius, spacing).xRadius,
       zRadius: calculateOrbit(5, baseXRadius, baseZRadius, spacing).zRadius,
-      angularVelocity: 0.6,
-      scale: 1,
+      angularVelocity: 0.8,
+      scale: Math.random(),
     },
     {
       id: 7,
@@ -263,8 +268,8 @@ export default function Planets() {
       ref: pumpkinMeshRef,
       xRadius: calculateOrbit(7, baseXRadius, baseZRadius, spacing).xRadius,
       zRadius: calculateOrbit(7, baseXRadius, baseZRadius, spacing).zRadius,
-      angularVelocity: 0.8,
-      scale: 1,
+      angularVelocity: 0.6,
+      scale: Math.random(),
     },
     {
       id: 9,
@@ -273,7 +278,7 @@ export default function Planets() {
       ref: rock047MeshRef,
       xRadius: calculateOrbit(8, baseXRadius, baseZRadius, spacing).xRadius,
       zRadius: calculateOrbit(8, baseXRadius, baseZRadius, spacing).zRadius,
-      angularVelocity: 0.9,
+      angularVelocity: 0.5,
       scale: Math.random(),
     },
     {
@@ -283,7 +288,7 @@ export default function Planets() {
       ref: waffleMeshRef,
       xRadius: calculateOrbit(9, baseXRadius, baseZRadius, spacing).xRadius,
       zRadius: calculateOrbit(9, baseXRadius, baseZRadius, spacing).zRadius,
-      angularVelocity: 1,
+      angularVelocity: 0.4,
       scale: Math.random(),
     },
     {
@@ -293,7 +298,7 @@ export default function Planets() {
       ref: watermelonMeshRef,
       xRadius: calculateOrbit(10, baseXRadius, baseZRadius, spacing).xRadius,
       zRadius: calculateOrbit(10, baseXRadius, baseZRadius, spacing).zRadius,
-      angularVelocity: 1.1,
+      angularVelocity: 0.3,
       scale: Math.random(),
     },
     {
@@ -303,7 +308,7 @@ export default function Planets() {
       ref: wetGroundMeshRef,
       xRadius: calculateOrbit(11, baseXRadius, baseZRadius, spacing).xRadius,
       zRadius: calculateOrbit(11, baseXRadius, baseZRadius, spacing).zRadius,
-      angularVelocity: 1.3,
+      angularVelocity: 0.2,
       scale: Math.random(),
     },
   ]
@@ -328,159 +333,161 @@ export default function Planets() {
   // If any of the planets touch the black hole decrease their scale and make them disappear
   return (
     <>
-      <group>
-        {/* Sun */}
-        <EffectComposer disableNormalPass>
-          <Bloom luminanceThreshold={luminanceThreshold} mipmapBlur />
-          <mesh ref={sun} scale={3}>
+      <Physics debug>
+        <group>
+          {/* Sun */}
+          <EffectComposer disableNormalPass>
+            <Bloom luminanceThreshold={luminanceThreshold} mipmapBlur />
+            <mesh ref={sun} scale={3}>
+              <sphereGeometry />
+              <meshStandardMaterial emissive="orange" emissiveIntensity={2} toneMapped={false} />
+            </mesh>
+            <ToneMapping />
+          </EffectComposer>
+          {/* Abstract1 Planet */}
+          <mesh ref={abstract1MeshRef}>
             <sphereGeometry />
-            <meshStandardMaterial emissive="orange" emissiveIntensity={2} toneMapped={false} />
+            <meshStandardMaterial
+              map={abstract1ColorMap}
+              normalMap={abstract1NormalMap}
+              displacementMap={abstract1RoughnessMap}
+              aoMap={abstract1OcclusionMap}
+            />
           </mesh>
-          <ToneMapping />
-        </EffectComposer>
-        {/* Abstract1 Planet */}
-        <mesh ref={abstract1MeshRef}>
-          <sphereGeometry />
-          <meshStandardMaterial
-            map={abstract1ColorMap}
-            normalMap={abstract1NormalMap}
-            displacementMap={abstract1RoughnessMap}
-            aoMap={abstract1OcclusionMap}
-          />
-        </mesh>
 
-        {/* Abstract8 Planet */}
-        <mesh position={[8, 0, 4]} ref={abstract8MeshRef}>
-          <sphereGeometry args={[1, 32, 32]} />
-          <meshStandardMaterial
-            map={abstract8ColorMap}
-            normalMap={abstract8NormalMap}
-            roughnessMap={abstract8RoughnessMap}
-            aoMap={abstract8OcclusionMap}
-          />
-        </mesh>
-        {/* 
+          {/* Abstract8 Planet */}
+          <mesh position={[8, 0, 4]} ref={abstract8MeshRef}>
+            <sphereGeometry args={[1, 32, 32]} />
+            <meshStandardMaterial
+              map={abstract8ColorMap}
+              normalMap={abstract8NormalMap}
+              roughnessMap={abstract8RoughnessMap}
+              aoMap={abstract8OcclusionMap}
+            />
+          </mesh>
+          {/* 
       Alien Planet */}
-        <mesh position={[10, 0, -10]} ref={alienMeshRef}>
-          <sphereGeometry args={[1, 32, 32]} />
-          <meshStandardMaterial
-            map={alienColorMap}
-            normalMap={alienNormalMap}
-            roughnessMap={alienRoughnessMap}
-            aoMap={alienOcclusionMap}
-          />
-        </mesh>
+          <mesh position={[10, 0, -10]} ref={alienMeshRef}>
+            <sphereGeometry args={[1, 32, 32]} />
+            <meshStandardMaterial
+              map={alienColorMap}
+              normalMap={alienNormalMap}
+              roughnessMap={alienRoughnessMap}
+              aoMap={alienOcclusionMap}
+            />
+          </mesh>
 
-        {/* Fur Planet */}
-        <mesh position={[12, 0, 8]} ref={furMeshRef}>
-          <sphereGeometry args={[1, 32, 32]} />
-          <meshStandardMaterial
-            map={furColorMap}
-            normalMap={furNormalMap}
-            aoMap={furOcclusionMap}
-            roughnessMap={furRoughnessMap}
-            heightMap={furNHeightlMap}
-          />
-        </mesh>
+          {/* Fur Planet */}
+          <mesh position={[12, 0, 8]} ref={furMeshRef}>
+            <sphereGeometry args={[1, 32, 32]} />
+            <meshStandardMaterial
+              map={furColorMap}
+              normalMap={furNormalMap}
+              aoMap={furOcclusionMap}
+              roughnessMap={furRoughnessMap}
+              heightMap={furNHeightlMap}
+            />
+          </mesh>
 
-        {/* Coffee Planet */}
-        <mesh position={[10, 0, 10]} ref={coffeeMeshRef}>
-          <sphereGeometry args={[1, 32, 32]} />
-          <meshStandardMaterial
-            map={coffeeColorMap}
-            normalMap={coffeeNormalMap}
-            roughnessMap={coffeeRoughnessMap}
-            aoMap={coffeeOcculsionMap}
-            color="#492201"
-            // displacementMap={coffeeDisplacementMap}
-          />
-        </mesh>
+          {/* Coffee Planet */}
+          <mesh position={[10, 0, 10]} ref={coffeeMeshRef}>
+            <sphereGeometry args={[1, 32, 32]} />
+            <meshStandardMaterial
+              map={coffeeColorMap}
+              normalMap={coffeeNormalMap}
+              roughnessMap={coffeeRoughnessMap}
+              aoMap={coffeeOcculsionMap}
+              color="#492201"
+              // displacementMap={coffeeDisplacementMap}
+            />
+          </mesh>
 
-        {/* Gems Planet */}
+          {/* Gems Planet */}
 
-        <mesh position={[6, 0, 6]} ref={gemsMeshRef}>
-          <sphereGeometry args={[1, 32, 32]} />
-          <meshStandardMaterial
-            map={gemsColorMap}
-            displacementMap={gemsDisplacementMap}
-            normalMap={gemsNormalMap}
-            roughnessMap={gemsRoughnessMap}
-            aoMap={gemsOcclusionMap}
-          />
-        </mesh>
+          <mesh position={[6, 0, 6]} ref={gemsMeshRef}>
+            <sphereGeometry args={[1, 32, 32]} />
+            <meshStandardMaterial
+              map={gemsColorMap}
+              displacementMap={gemsDisplacementMap}
+              normalMap={gemsNormalMap}
+              roughnessMap={gemsRoughnessMap}
+              aoMap={gemsOcclusionMap}
+            />
+          </mesh>
 
-        {/* Mud Planet */}
-        <mesh position={[4, 0, 4]} ref={mudMeshRef}>
-          <sphereGeometry args={[1, 32, 32]} />
-          <meshStandardMaterial
-            map={mudColorMap}
-            heightMap={mudHeightMap}
-            normalMap={mudNormalMap}
-            roughnessMap={mudRoughnessMap}
-            aoMap={mudOcclusionMap}
-          />
-        </mesh>
+          {/* Mud Planet */}
+          <mesh position={[4, 0, 4]} ref={mudMeshRef}>
+            <sphereGeometry args={[1, 32, 32]} />
+            <meshStandardMaterial
+              map={mudColorMap}
+              heightMap={mudHeightMap}
+              normalMap={mudNormalMap}
+              roughnessMap={mudRoughnessMap}
+              aoMap={mudOcclusionMap}
+            />
+          </mesh>
 
-        {/* Pumpkin Planet */}
-        <mesh position={[2, 0, 4]} ref={pumpkinMeshRef}>
-          <sphereGeometry args={[1, 32, 32]} />
-          <meshStandardMaterial
-            map={pumpkinColorMap}
-            heightMap={pumpkinHeightMap}
-            normalMap={pumpkinNormalMap}
-            roughnessMap={pumpkinRoughnessMap}
-            aoMap={pumpkinOcclusionMap}
-          />
-        </mesh>
+          {/* Pumpkin Planet */}
+          <mesh position={[2, 0, 4]} ref={pumpkinMeshRef}>
+            <sphereGeometry args={[1, 32, 32]} />
+            <meshStandardMaterial
+              map={pumpkinColorMap}
+              heightMap={pumpkinHeightMap}
+              normalMap={pumpkinNormalMap}
+              roughnessMap={pumpkinRoughnessMap}
+              aoMap={pumpkinOcclusionMap}
+            />
+          </mesh>
 
-        {/* Rock047 Planet */}
-        <mesh position={[0, 0, -6]} ref={rock047MeshRef}>
-          <sphereGeometry args={[1, 32, 32]} />
-          <meshStandardMaterial
-            map={rock047ColorMap}
-            heightMap={rock047heightMap}
-            normalMap={rock047NormalMap}
-            roughnessMap={rock047RoughnessMap}
-            aoMap={rock047OcclusionMap}
-          />
-        </mesh>
+          {/* Rock047 Planet */}
+          <mesh position={[0, 0, -6]} ref={rock047MeshRef}>
+            <sphereGeometry args={[1, 32, 32]} />
+            <meshStandardMaterial
+              map={rock047ColorMap}
+              heightMap={rock047heightMap}
+              normalMap={rock047NormalMap}
+              roughnessMap={rock047RoughnessMap}
+              aoMap={rock047OcclusionMap}
+            />
+          </mesh>
 
-        {/* waffle Planet */}
-        <mesh position={[2, 0, -6]} ref={waffleMeshRef}>
-          <sphereGeometry args={[1, 32, 32]} />
-          <meshStandardMaterial
-            map={waffleColorMap}
-            heightMap={waffleHeightMap}
-            normalMap={waffleNormalMap}
-            roughnessMap={waffleRoughnessMap}
-            aoMap={waffleOcclusionMap}
-          />
-        </mesh>
+          {/* waffle Planet */}
+          <mesh position={[2, 0, -6]} ref={waffleMeshRef}>
+            <sphereGeometry args={[1, 32, 32]} />
+            <meshStandardMaterial
+              map={waffleColorMap}
+              heightMap={waffleHeightMap}
+              normalMap={waffleNormalMap}
+              roughnessMap={waffleRoughnessMap}
+              aoMap={waffleOcclusionMap}
+            />
+          </mesh>
 
-        {/* watermelon Planet */}
-        <mesh position={[7, 0, -6]} ref={watermelonMeshRef}>
-          <sphereGeometry args={[1, 32, 32]} />
-          <meshStandardMaterial
-            map={watermelonColorMap}
-            heightMap={watermelonHeightMap}
-            normalMap={watermelonNormalMap}
-            roughnessMap={watermelonRoughnessMap}
-            aoMap={watermelonOcclusionMap}
-          />
-        </mesh>
+          {/* watermelon Planet */}
+          <mesh position={[7, 0, -6]} ref={watermelonMeshRef}>
+            <sphereGeometry args={[1, 32, 32]} />
+            <meshStandardMaterial
+              map={watermelonColorMap}
+              heightMap={watermelonHeightMap}
+              normalMap={watermelonNormalMap}
+              roughnessMap={watermelonRoughnessMap}
+              aoMap={watermelonOcclusionMap}
+            />
+          </mesh>
 
-        {/* wetGround Planet */}
-        <mesh position={[4, 0, -6]} ref={wetGroundMeshRef}>
-          <sphereGeometry args={[1, 32, 32]} />
-          <meshStandardMaterial
-            map={wetGroundColorMap}
-            heightMap={wetGroundHeightMap}
-            normalMap={wetGroundNormalMap}
-            roughnessMap={wetGroundRoughnessMap}
-            aoMap={wetGroundOcclusionMap}
-          />
-        </mesh>
-      </group>
+          {/* wetGround Planet */}
+          <mesh position={[4, 0, -6]} ref={wetGroundMeshRef}>
+            <sphereGeometry args={[1, 32, 32]} />
+            <meshStandardMaterial
+              map={wetGroundColorMap}
+              heightMap={wetGroundHeightMap}
+              normalMap={wetGroundNormalMap}
+              roughnessMap={wetGroundRoughnessMap}
+              aoMap={wetGroundOcclusionMap}
+            />
+          </mesh>
+        </group>
+      </Physics>
     </>
   )
 }

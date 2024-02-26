@@ -79,6 +79,7 @@ export default function Experience() {
 
   return (
     <>
+      <Perf position="top-left" />
       {/* <Environment background files="./nebbi.pic" /> */}
       {/* <Environment background preset="dawn" /> */}
       <color attach="background" args={['#001122']} />

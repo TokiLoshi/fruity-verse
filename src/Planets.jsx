@@ -220,16 +220,16 @@ export default function Planets() {
       angularVelocity: 1.1,
       scale: Math.random(),
     },
-    {
-      id: 4,
-      name: 'Coffee',
-      position: [10, 0, 10],
-      ref: coffeeMeshRef,
-      xRadius: calculateOrbit(3, baseXRadius, baseZRadius, spacing).xRadius,
-      zRadius: calculateOrbit(3, baseXRadius, baseZRadius, spacing).zRadius,
-      angularVelocity: 1,
-      scale: Math.random(),
-    },
+    // {
+    //   id: 4,
+    //   name: 'Coffee',
+    //   position: [10, 0, 10],
+    //   ref: coffeeMeshRef,
+    //   xRadius: calculateOrbit(3, baseXRadius, baseZRadius, spacing).xRadius,
+    //   zRadius: calculateOrbit(3, baseXRadius, baseZRadius, spacing).zRadius,
+    //   angularVelocity: 1,
+    //   scale: Math.random(),
+    // },
     {
       id: 5,
       name: 'Fur',
@@ -250,16 +250,16 @@ export default function Planets() {
       angularVelocity: 0.8,
       scale: Math.random(),
     },
-    {
-      id: 7,
-      name: 'Mud',
-      position: [4, 0, 4],
-      ref: mudMeshRef,
-      xRadius: calculateOrbit(6, baseXRadius, baseZRadius, spacing).xRadius,
-      zRadius: calculateOrbit(6, baseXRadius, baseZRadius, spacing).zRadius,
-      angularVelocity: 0.7,
-      scale: Math.random(),
-    },
+    // {
+    //   id: 7,
+    //   name: 'Mud',
+    //   position: [4, 0, 4],
+    //   ref: mudMeshRef,
+    //   xRadius: calculateOrbit(6, baseXRadius, baseZRadius, spacing).xRadius,
+    //   zRadius: calculateOrbit(6, baseXRadius, baseZRadius, spacing).zRadius,
+    //   angularVelocity: 0.7,
+    //   scale: Math.random(),
+    // },
 
     {
       id: 8,
@@ -301,16 +301,16 @@ export default function Planets() {
       angularVelocity: 0.3,
       scale: Math.random(),
     },
-    {
-      id: 12,
-      name: 'weGround',
-      position: [-1, 0, -3],
-      ref: wetGroundMeshRef,
-      xRadius: calculateOrbit(11, baseXRadius, baseZRadius, spacing).xRadius,
-      zRadius: calculateOrbit(11, baseXRadius, baseZRadius, spacing).zRadius,
-      angularVelocity: 0.2,
-      scale: Math.random(),
-    },
+    // {
+    //   id: 12,
+    //   name: 'weGround',
+    //   position: [-1, 0, -3],
+    //   ref: wetGroundMeshRef,
+    //   xRadius: calculateOrbit(11, baseXRadius, baseZRadius, spacing).xRadius,
+    //   zRadius: calculateOrbit(11, baseXRadius, baseZRadius, spacing).zRadius,
+    //   angularVelocity: 0.2,
+    //   scale: Math.random(),
+    // },
   ]
 
   useFrame((state, delta) => {
@@ -391,7 +391,7 @@ export default function Planets() {
         </mesh>
 
         {/* Coffee Planet */}
-        <mesh position={[10, 0, 10]} ref={coffeeMeshRef}>
+        {/* <mesh position={[10, 0, 10]} ref={coffeeMeshRef}>
           <sphereGeometry args={[1, 32, 32]} />
           <meshStandardMaterial
             map={coffeeColorMap}
@@ -401,7 +401,7 @@ export default function Planets() {
             color="#492201"
             // displacementMap={coffeeDisplacementMap}
           />
-        </mesh>
+        </mesh> */}
 
         {/* Gems Planet */}
 
@@ -417,7 +417,7 @@ export default function Planets() {
         </mesh>
 
         {/* Mud Planet */}
-        <mesh position={[4, 0, 4]} ref={mudMeshRef}>
+        {/* <mesh position={[4, 0, 4]} ref={mudMeshRef}>
           <sphereGeometry args={[1, 32, 32]} />
           <meshStandardMaterial
             map={mudColorMap}
@@ -426,7 +426,7 @@ export default function Planets() {
             roughnessMap={mudRoughnessMap}
             aoMap={mudOcclusionMap}
           />
-        </mesh>
+        </mesh> */}
 
         {/* Pumpkin Planet */}
         <mesh position={[2, 0, 4]} ref={pumpkinMeshRef}>
@@ -477,7 +477,7 @@ export default function Planets() {
         </mesh>
 
         {/* wetGround Planet */}
-        <mesh position={[4, 0, -6]} ref={wetGroundMeshRef}>
+        {/* <mesh position={[4, 0, -6]} ref={wetGroundMeshRef}>
           <sphereGeometry args={[1, 32, 32]} />
           <meshStandardMaterial
             map={wetGroundColorMap}
@@ -486,7 +486,7 @@ export default function Planets() {
             roughnessMap={wetGroundRoughnessMap}
             aoMap={wetGroundOcclusionMap}
           />
-        </mesh>
+        </mesh> */}
       </group>
     </>
   )

@@ -22,10 +22,10 @@ root.render(
       fov: 45,
       near: 0.1,
       far: 2000,
-      position: [-50, 13, 6],
+      position: [-50, 13, 6]
     }}>
     <Suspense fallback={<CustomLoader />}>
       <Experience />
     </Suspense>
-  </Canvas>,
+  </Canvas>
 )

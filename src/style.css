@@ -1,10 +1,49 @@
 html,
 body,
 #root {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: ivory;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: ivory;
+}
+
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0);
+  border-radius: 5px;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.popup {
+  margin: 0 auto;
+  padding: 50px;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 10;
+  font: 16px/1.5 'Helvetica Neue', Arial, sans-serif;
+  color: purple;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.closeButton {
+  background-color: #5adbac;
+  border-radius: 10px;
+  border: white;
+  padding: 15px;
+  color: #033221;
+}
+.closeButton:hover {
+  background-color: #033221;
+  color: #5adbac;
+  cursor: pointer;
 }

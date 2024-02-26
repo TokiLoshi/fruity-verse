@@ -1,15 +1,16 @@
 import { useFrame } from '@react-three/fiber'
 import { Environment, Sparkles, Sky, OrbitControls } from '@react-three/drei'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useControls, folder } from 'leva'
 
 import { Perf } from 'r3f-perf'
-
+import { extend } from '@react-three/fiber'
 import { vertexShader, fragmentShader } from './shaders'
 import * as THREE from 'three'
 import Planets from './Planets'
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import { useLoader } from '@react-three/fiber'
+import Consoles from './Consoles.jsx'
 
 /**
  * Loading Screen
@@ -56,12 +57,10 @@ const getEaten = () => {
   console.log('Black hole at another planet!')
 }
 
-console.log(vertexShader)
-console.log(fragmentShader)
-
 export default function Experience() {
   // Load an interesting background using blockade labs
   // https://www.blockade.io/
+  const [showPopup, setShowPopup] = useState(true)
 
   const sun = useRef()
   const torus = useRef()
@@ -83,6 +82,7 @@ export default function Experience() {
       {/* <Environment background files="./nebbi.pic" /> */}
       {/* <Environment background preset="dawn" /> */}
       <color attach="background" args={['#001122']} />
+      {showPopup && <Consoles />}
       <OrbitControls />
       <directionalLight position={[1, 2, 3]} intensity={4.5} />
       <ambientLight intensity={0.5} />

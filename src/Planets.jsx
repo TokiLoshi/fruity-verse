@@ -5,7 +5,7 @@ import { useFrame } from '@react-three/fiber'
 import { useGLTF, Float, Text } from '@react-three/drei'
 import { useLoader } from '@react-three/fiber'
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
-import { Vignette, ToneMapping, Bloom, EffectComposer } from '@react-three/postprocessing'
+import { ToneMapping, Bloom, EffectComposer } from '@react-three/postprocessing'
 import { BlendFunction } from 'postprocessing'
 import { useControls, folder } from 'leva'
 
@@ -14,12 +14,8 @@ export default function Planets() {
   const { offset, darkness, luminanceThreshold, height, luminanceSmoothing } = useControls('Effects', {
     'Sun Glow': folder(
       {
-        offset: { value: 0.15, min: 0, max: 1 },
-        darkness: { value: 0.84, min: 0, max: 1 },
-
-        luminanceThreshold: { value: 0.15, min: 0, max: 1 },
+        luminanceThreshold: { value: 0.15, min: 0, max: 2 },
         height: { value: 300, min: 0, max: 1000 },
-        luminanceSmoothing: { value: 0.9, min: 0, max: 1 },
       },
       { collapsed: false },
     ),
@@ -322,34 +318,6 @@ export default function Planets() {
     })
   })
 
-  // const baseXRadius = 5
-  // const baseZRadius = 8
-  // const spacing = 6
-
-  // planetsData.forEach((planet, index) => {
-  //   console.log('Planet: ', planet)
-  //   if (planet.ref.current) {
-  //     const xRadiusIncrement = index * spacing
-  //     const zRadiusIncrement = index * (spacing / 2)
-
-  //     planet.xRadius = baseXRadius + xRadiusIncrement
-  //     planet.zRadius = baseZRadius + zRadiusIncrement
-  //     const initialAngle = Math.random() * (Math.PI * 2)
-  //     planet.ref.current.position.x = planet.xRadius * Math.cos(initialAngle)
-  //     planet.ref.current.position.z = planet.zRadius * Math.sin(initialAngle)
-  //   }
-  // })
-
-  // useFrame((state, delta) => {
-  //   const time = state.clock.getElapsedTime()
-  //   planetsData.forEach((planet, index) => {
-  //     if (planet.ref.current) {
-  //       planet.ref.current.position.x = planet.xRadius * Math.cos(time * planet.angularVelocity)
-  //       planet.ref.current.position.z = planet.zRadius * Math.sin(time * planet.angularVelocity)
-  //     }
-  //   })
-  // })
-
   // Add colliders to the scene
   // Add Phsyics
   // Larger planets should either rotate slower or move faster - need to look this up
@@ -363,7 +331,7 @@ export default function Planets() {
       <group>
         {/* Sun */}
         <EffectComposer disableNormalPass>
-          <Bloom luminanceThreshold={luminanceThreshold} luminanceSmoothing={luminanceSmoothing} height={height} />
+          <Bloom luminanceThreshold={luminanceThreshold} mipmapBlur />
           <mesh ref={sun} scale={3}>
             <sphereGeometry />
             <meshStandardMaterial emissive="orange" emissiveIntensity={2} toneMapped={false} />
